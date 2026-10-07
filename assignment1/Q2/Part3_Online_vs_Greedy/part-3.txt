@@ -1,0 +1,52 @@
+Acrobot-v1 | Bins=10 | States=1,000,000 | γ=0.99
+Training episodes = 3000
+
+======================================================================
+PART 3 — ε: 1 → 0.1 (then fixed)
+  α=0.1, γ=0.99, ε: 1.0 → 0.1 (decay=0.995)
+======================================================================
+  Seed 0 (1/10) ... done (74.4s)
+  Seed 1 (2/10) ... done (73.9s)
+  Seed 2 (3/10) ... done (73.6s)
+  Seed 3 (4/10) ... done (73.6s)
+  Seed 4 (5/10) ... done (74.5s)
+  Seed 5 (6/10) ... done (72.8s)
+  Seed 6 (7/10) ... done (72.9s)
+  Seed 7 (8/10) ... done (73.5s)
+  Seed 8 (9/10) ... done (73.1s)
+  Seed 9 (10/10) ... done (74.3s)
+
+Plot saved → part3_online_vs_greedy.png
+
+  (i)  Online performance (last 200 eps, ε ≈ 0.1):
+         SARSA      : -345.65 ± 26.76
+         Q-Learning : -332.98 ± 20.47
+  (ii) Greedy policy (ε = 0, after training):
+         SARSA      : -318.88 ± 42.07
+         Q-Learning : -317.11 ± 35.90
+
+--- Explanation ---
+  Online vs Greedy gap:
+    The greedy policy (ε=0) outperforms the online performance (ε=0.1)
+    because 10% random actions during training cause suboptimal steps,
+    increasing episode length and accumulating more negative reward.
+
+  SARSA vs Q-Learning — online:
+    SARSA (on-policy) learns values under the ε-greedy behaviour policy
+    it actually follows. Its online returns directly reflect the quality
+    of its learned Q-values. With ε fixed at 0.1, the agent never fully
+    exploits and online returns plateau.
+
+  SARSA vs Q-Learning — greedy:
+    Q-Learning (off-policy) always updates towards max_a Q(s',a),
+    directly estimating the optimal (greedy) value function regardless
+    of the exploratory actions taken. Therefore its greedy policy after
+    training tends to be better than SARSA's, whose Q-values were shaped
+    by the ε-greedy behaviour and are slightly conservative.
+
+  Since ε never reaches 0 (fixed at 0.1), the persistent exploration
+  creates a permanent gap between online and greedy performance. This
+  contrasts with a decaying schedule (ε→0) where the gap eventually
+  vanishes as the agent becomes fully greedy.
+
+Done. Plot: part3_online_vs_greedy.png

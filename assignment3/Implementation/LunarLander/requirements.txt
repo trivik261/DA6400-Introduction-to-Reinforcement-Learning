@@ -1,0 +1,11 @@
+# Core dependencies for LunarLander SAC experiments
+numpy>=1.24.0
+torch>=2.0.0
+gymnasium>=0.29.0
+matplotlib>=3.7.0
+
+# Note: This project requires the official pytorch_sac repository
+# Clone it in the parent directory (D:\RL\A3\):
+# cd D:\RL\A3 && git clone https://github.com/denisyarats/pytorch_sac.git
+#
+# The official_sac_adapter.py is included in this folder (no dependency on Pendulum)

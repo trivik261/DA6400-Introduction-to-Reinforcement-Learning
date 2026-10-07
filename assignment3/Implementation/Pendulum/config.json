@@ -1,0 +1,37 @@
+{
+  "training": {
+    "target_angle": 0,
+    "max_episode_steps": 1000,
+    "total_timesteps": 200000,
+    "random_exploration_steps": 500,
+    "eval_freq": 10000,
+    "num_eval_episodes": 20,
+    "device": "auto",
+    "output_dir": "outputs"
+  },
+  "environment": {
+    "reward_type": "default",
+    "reward_scale": 1.0,
+    "max_torque": 2.0
+  },
+  "sac": {
+    "type": "automatic",
+    "manual_alpha": 0.2,
+    "gamma": 0.99,
+    "tau": 0.005,
+    "learning_rate": 0.0003,
+    "hidden_dim": 256,
+    "buffer_size": 1000000,
+    "batch_size": 256
+  },
+  "features": {
+    "enable_checkpoints": true,
+    "checkpoint_freq": 10000,
+    "keep_best_n": 3,
+    "keep_last_n": 2,
+    "enable_early_stopping": true,
+    "early_stopping_patience": 5,
+    "early_stopping_min_delta": 5.0,
+    "enable_live_plot": false
+  }
+}

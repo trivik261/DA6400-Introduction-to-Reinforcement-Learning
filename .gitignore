@@ -1,0 +1,26 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Experiment outputs and checkpoints
+results/
+experiments/
+checkpoints/
+*.pth
+*.pt
+*.ckpt
+*.npy
+*.npz
+*.mp4
+*.gif
+*.png
+*.pdf
+
+# Local/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

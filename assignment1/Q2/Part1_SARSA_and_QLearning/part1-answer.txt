@@ -1,0 +1,29 @@
+Part 1 — SARSA & Q-Learning on Acrobot-v1
+  Bins/dim        : 10
+  Total states    : 1,000,000  (10^6)
+  Actions         : 3  (torque -1, 0, +1)
+  γ = 0.99   α = 0.1
+  ε : 1.0 → 0.01 (decay = 0.995)
+  Training episodes : 3000
+============================================================
+
+>>> Training SARSA ...
+  [SARSA]  Ep   500 | Avg(100):  -438.80 | ε=0.0816
+  [SARSA]  Ep  1000 | Avg(100):  -374.46 | ε=0.0100
+  [SARSA]  Ep  1500 | Avg(100):  -359.57 | ε=0.0100
+  [SARSA]  Ep  2000 | Avg(100):  -386.07 | ε=0.0100
+  [SARSA]  Ep  2500 | Avg(100):  -350.19 | ε=0.0100
+  [SARSA]  Ep  3000 | Avg(100):  -263.23 | ε=0.0100
+
+>>> Training Q-Learning ...
+  [Q-Lrn] Ep   500 | Avg(100):  -435.33 | ε=0.0816
+  [Q-Lrn] Ep  1000 | Avg(100):  -379.86 | ε=0.0100
+  [Q-Lrn] Ep  1500 | Avg(100):  -399.25 | ε=0.0100
+  [Q-Lrn] Ep  2000 | Avg(100):  -327.76 | ε=0.0100
+  [Q-Lrn] Ep  2500 | Avg(100):  -299.29 | ε=0.0100
+  [Q-Lrn] Ep  3000 | Avg(100):  -371.80 | ε=0.0100
+
+>>> Evaluating greedy policies ...
+
+  SARSA      — Greedy mean reward : -319.14 ± 105.96
+  Q-Learning — Greedy mean reward : -359.76 ± 105.03

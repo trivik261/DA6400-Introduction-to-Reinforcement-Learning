@@ -1,0 +1,121 @@
+================================================================================
+PART 2 — Results: Hyperparameter Tuning & Multi-Seed Evaluation
+================================================================================
+Environment : Acrobot-v1 (Gymnasium)
+State space : 10 bins/dim × 6 dims = 10^6 = 1,000,000 discrete states
+Action space: 3 actions (torque: -1, 0, +1)
+γ = 0.99 | Training episodes = 3,000
+
+================================================================================
+PART 2a — Hyperparameter Tuning
+================================================================================
+
+Grid search: 4 α values × 5 ε configurations = 20 combinations (seed=42)
+Metric: Mean return over last 200 episodes (higher = better, less negative)
+
+--- Full Grid-Search Results ---
+
+  Config                              SARSA     Q-Learning
+  ─────────────────────────────────────────────────────────
+  α=0.05, constant ε=0.3             -377.4     -349.4
+  α=0.05, constant ε=0.1             -325.9     -351.9
+  α=0.05, decay 1→0.01, d=0.995      -349.3     -344.1
+  α=0.05, decay 1→0.01, d=0.999      -346.0     -339.2
+  α=0.05, decay 1→0.01, d=0.99       -319.4     -348.3
+  α=0.1,  constant ε=0.3             -351.6     -370.9
+  α=0.1,  constant ε=0.1             -315.4     -359.8
+  α=0.1,  decay 1→0.01, d=0.995      -264.3     -351.5
+  α=0.1,  decay 1→0.01, d=0.999      -292.5     -345.2
+  α=0.1,  decay 1→0.01, d=0.99       -281.5     -293.6
+  α=0.2,  constant ε=0.3             -370.6     -401.0
+  α=0.2,  constant ε=0.1             -288.4     -341.1
+  α=0.2,  decay 1→0.01, d=0.995      -318.2     -344.3
+  α=0.2,  decay 1→0.01, d=0.999      -304.5     -372.2
+  α=0.2,  decay 1→0.01, d=0.99       -316.1     -346.7
+  α=0.5,  constant ε=0.3             -461.5     -463.2
+  α=0.5,  constant ε=0.1             -423.8     -416.6
+  α=0.5,  decay 1→0.01, d=0.995      -399.4     -389.0
+  α=0.5,  decay 1→0.01, d=0.999      -383.1     -382.8
+  α=0.5,  decay 1→0.01, d=0.99       -352.1     -357.1
+
+--- Top 3 Configurations: SARSA ---
+  #1  α=0.1, decay 1→0.01, d=0.995   →  Avg return = -264.27
+  #2  α=0.1, decay 1→0.01, d=0.99    →  Avg return = -281.46
+  #3  α=0.2, constant ε=0.1          →  Avg return = -288.35
+
+--- Top 3 Configurations: Q-Learning ---
+  #1  α=0.1, decay 1→0.01, d=0.99    →  Avg return = -293.61
+  #2  α=0.05, decay 1→0.01, d=0.999  →  Avg return = -339.18
+  #3  α=0.2, constant ε=0.1          →  Avg return = -341.13
+
+--- Is constant ε sufficient? ---
+
+  Best constant-ε results:
+    SARSA  : constant ε=0.1, α=0.2 → -288.35
+    Q-Lrn  : constant ε=0.1, α=0.2 → -341.13
+
+  Best decaying-ε results:
+    SARSA  : decay 1→0.01, d=0.995, α=0.1 → -264.27
+    Q-Lrn  : decay 1→0.01, d=0.99,  α=0.1 → -293.61
+
+  Answer: No, a constant ε is NOT sufficient. Decaying ε consistently
+  outperforms constant ε for both algorithms:
+    - SARSA improvement:      -288.35 → -264.27  (Δ = +24.08)
+    - Q-Learning improvement: -341.13 → -293.61  (Δ = +47.52)
+
+  Reason: With constant ε, the agent continues taking random actions
+  (10% or 30% of the time) even after learning a good policy. These
+  random actions waste steps and accumulate negative reward (-1 per step).
+  Decaying ε starts with high exploration (ε=1.0) to discover good
+  trajectories, then reduces to near-zero (0.01) so the agent can fully
+  exploit its learned policy. This explore-then-exploit strategy is
+  essential for convergence to a near-optimal policy.
+
+  Implemented decay schedule: ε_new = max(ε_min, ε_old × decay_rate)
+  Best decay rates found: 0.995 (SARSA) and 0.99 (Q-Learning).
+
+Plot: part2a_tuning_heatmap.png  (α × ε heatmap for both algorithms)
+
+================================================================================
+PART 2b — Multi-Seed Runs (10 seeds, tuned hyperparameters)
+================================================================================
+
+  Tuned hyperparameters used:
+    SARSA      : α=0.1, ε: 1.0 → 0.01, decay=0.995
+    Q-Learning : α=0.1, ε: 1.0 → 0.01, decay=0.99
+
+  Per-seed training time: ~72s each (3,000 episodes)
+
+  Final performance (mean return over last 200 episodes, across 10 seeds):
+    SARSA      : -321.47 ± 14.29
+    Q-Learning : -318.43 ± 34.18
+
+--- Explanation of Results ---
+
+  Both algorithms show clear learning curves, improving from ~-500 (random
+  policy) towards ~-300 over 3,000 episodes.
+
+  SARSA and Q-Learning achieve similar final performance (-321 vs -318),
+  with overlapping confidence bands. However, they differ in key ways:
+
+  1. Convergence speed: Q-Learning tends to improve slightly faster in
+     early episodes because its update target (max Q) is always optimistic,
+     pushing Q-values upward more aggressively.
+
+  2. Stability: SARSA shows tighter confidence bands (std=14.29 vs 34.18),
+     meaning it is more consistent across seeds. This is because SARSA's
+     on-policy updates learn the value of the policy it actually follows
+     (including ε-greedy exploration), making it less sensitive to the
+     randomness of specific trajectories.
+
+  3. Q-Learning's higher variance comes from its off-policy nature: it
+     optimises for the greedy policy while behaving with ε-greedy. This
+     mismatch can cause overestimation of Q-values, leading to more
+     variable outcomes depending on which states are visited.
+
+  4. As ε decays to near 0, both algorithms converge towards similar
+     policies since the gap between on-policy and off-policy updates
+     shrinks (when ε≈0, the ε-greedy policy ≈ the greedy policy).
+
+Plot: part2b_multiseed.png  (mean ± 1 std dev learning curves)
+================================================================================

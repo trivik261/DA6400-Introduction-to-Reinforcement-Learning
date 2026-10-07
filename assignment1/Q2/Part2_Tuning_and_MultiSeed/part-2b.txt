@@ -1,0 +1,89 @@
+ python part2_tuning_and_multiseed.py
+Acrobot-v1 | Bins=10 | States=1,000,000 | γ=0.99
+Training episodes = 3000
+
+======================================================================
+PART 2a — Hyperparameter Tuning (step-size α and ε schedule)
+======================================================================
+  [ 1/20] α=0SARSA=-377.4  Q-Lrn=-349.4  (82.7s)
+  [ 2/20] α=0.05, constant ε=0.1 ... SARSA=-325.9  Q-Lrn=-351.9  (78.0s)
+  [ 3/20] α=0.05, decay 1→0.01, d=0.995 ... SARSA=-349.3  Q-Lrn=-344.1  (74.5s)
+  [ 4/20] α=0.05, decay 1→0.01, d=0.999 ... SARSA=-346.0  Q-Lrn=-339.2  (74.1s)
+  [ 5/20] α=0.05, decay 1→0.01, d=0.99 ... SARSA=-319.4  Q-Lrn=-348.3  (73.4s)
+  [ 6/20] α=0.1, constant ε=0.3 ... SARSA=-351.6  Q-Lrn=-370.9  (75.3s)
+  [ 7/20] α=0.1, constant ε=0.1 ... SARSA=-315.4  Q-Lrn=-359.8  (72.3s)
+  [ 8/20] α=0.1, decay 1→0.01, d=0.995 ... SARSA=-264.3  Q-Lrn=-351.5  (68.7s)
+  [ 9/20] α=0.1, decay 1→0.01, d=0.999 ... SARSA=-292.5  Q-Lrn=-345.2  (71.2s)
+  [10/20] α=0.1, decay 1→0.01, d=0.99 ... SARSA=-281.5  Q-Lrn=-293.6  (69.4s)
+  [11/20] α=0.2, constant ε=0.3 ... SARSA=-370.6  Q-Lrn=-401.0  (76.1s)
+  [12/20] α=0.2, constant ε=0.1 ... SARSA=-288.4  Q-Lrn=-341.1  (68.3s)
+  [13/20] α=0.2, decay 1→0.01, d=0.995 ... SARSA=-318.2  Q-Lrn=-344.3  (67.2s)
+  [14/20] α=0.2, decay 1→0.01, d=0.999 ... SARSA=-304.5  Q-Lrn=-372.2  (72.5s)
+  [15/20] α=0.2, decay 1→0.01, d=0.99 ... SARSA=-316.1  Q-Lrn=-346.7  (66.9s)
+  [16/20] α=0.5, constant ε=0.3 ... SARSA=-461.5  Q-Lrn=-463.2  (83.5s)
+  [17/20] α=0.5, constant ε=0.1 ... SARSA=-423.8  Q-Lrn=-416.6  (76.9s)
+  [18/20] α=0.5, decay 1→0.01, d=0.995 ... SARSA=-399.4  Q-Lrn=-389.0  (73.2s)
+  [19/20] α=0.5, decay 1→0.01, d=0.999 ... SARSA=-383.1  Q-Lrn=-382.8  (79.6s)
+  [20/20] α=0.5, decay 1→0.01, d=0.99 ... SARSA=-352.1  Q-Lrn=-357.1  (72.0s)
+
+--- Top 3 Configurations: SARSA ---
+  #1  α=0.1, decay 1→0.01, d=0.995  →  Avg return (last 200 eps) = -264.27
+  #2  α=0.1, decay 1→0.01, d=0.99  →  Avg return (last 200 eps) = -281.46
+  #3  α=0.2, constant ε=0.1  →  Avg return (last 200 eps) = -288.35
+
+--- Top 3 Configurations: Q-Learning ---
+  #1  α=0.1, decay 1→0.01, d=0.99  →  Avg return (last 200 eps) = -293.61
+  #2  α=0.05, decay 1→0.01, d=0.999  →  Avg return (last 200 eps) = -339.18
+  #3  α=0.2, constant ε=0.1  →  Avg return (last 200 eps) = -341.13
+
+--- Constant ε vs Decaying ε ---
+  SARSA  best constant : constant ε=0.1, α=0.2 → -288.35
+  SARSA  best decaying : decay 1→0.01, d=0.995, α=0.1 → -264.27
+  Q-Lrn  best constant : constant ε=0.1, α=0.2 → -341.13
+  Q-Lrn  best decaying : decay 1→0.01, d=0.99, α=0.1 → -293.61
+
+  A constant ε forces the agent to keep taking random actions even after
+  it has learned a good policy, degrading final performance. Decaying ε
+  (→ 0) allows early exploration and later exploitation, which is needed
+  to converge to a near-optimal greedy policy.
+
+Plot saved → part2a_tuning_heatmap.png
+
+======================================================================
+PART 2b — 10-Seed Runs with Tuned Hyperparameters
+  SARSA  : {'alpha': 0.1, 'eps_start': 1.0, 'eps_min': 0.01, 'eps_decay': 0.995}
+  Q-Lrn  : {'alpha': 0.1, 'eps_start': 1.0, 'eps_min': 0.01, 'eps_decay': 0.99}
+======================================================================
+  Seed 0 (1/10) ... done (68.2s)
+  Seed 1 (2/10) ... done (67.8s)
+  Seed 2 (3/10) ... done (67.4s)
+  Seed 3 (4/10) ... done (67.9s)
+  Seed 4 (5/10) ... done (67.7s)
+  Seed 5 (6/10) ... done (68.8s)
+  Seed 6 (7/10) ... done (68.1s)
+  Seed 7 (8/10) ... done (67.7s)
+  Seed 8 (9/10) ... done (69.2s)
+  Seed 9 (10/10) ... done (67.8s)
+
+Plot saved → part2b_return_vs_episodes.png
+Plot saved → part2b_return_vs_timesteps.png
+
+  Final performance (mean of last 200 eps across 10 seeds):
+    SARSA      : -321.47 ± 14.29
+    Q-Learning : -318.43 ± 34.18
+
+--- Comparison ---
+  Q-Learning (off-policy) updates towards the max Q-value of the next
+  state, directly estimating the optimal action-value function. This
+  usually leads to faster convergence and higher final returns.
+
+  SARSA (on-policy) updates towards the Q-value of the action actually
+  taken under ε-greedy, so it learns a policy that accounts for ongoing
+  exploration. This makes it more conservative but also more stable in
+  environments where exploratory actions can be costly.
+
+  As ε decays towards 0, both algorithms converge towards the same
+  optimal Q-values, but Q-Learning typically gets there faster because
+  its target is always the greedy (max) value.
+
+Done. Plots: part2a_tuning_heatmap.png, part2b_return_vs_episodes.png, part2b_return_vs_timesteps.png

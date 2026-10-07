@@ -1,0 +1,35 @@
+{
+  "environment": {
+    "name": "MountainCar-v0",
+    "max_episode_steps": 2000
+  },
+  "training": {
+    "num_episodes": 1200,
+    "num_seeds": 15,
+    "batch_size": 64,
+    "learning_rate": 0.001,
+    "gamma": 0.99,
+    "target_update_freq": 100,
+    "replay_buffer_size": 10000,
+    "update_every": 4,
+    "replay_factor": 1
+  },
+  "exploration": {
+    "eps_start": 1.0,
+    "eps_end": 0.01,
+    "eps_decay": 0.995
+  },
+  "experiment": {
+    "experiment_type": "Q3.3",
+    "truncation_values": [
+      2000
+    ],
+    "replay_factors": [1, 2, 4, 8],
+    "enable_video": true,
+    "save_checkpoints": true
+  },
+  "system": {
+    "device": "cpu",
+    "fast_mode": false
+  }
+}

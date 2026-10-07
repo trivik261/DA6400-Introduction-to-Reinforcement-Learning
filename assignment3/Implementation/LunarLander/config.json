@@ -1,0 +1,56 @@
+{
+  "training": {
+    "env_name": "LunarLander-v3",
+    "continuous": true,
+    "max_episode_steps": 1000,
+    "total_timesteps": 500000,
+    "random_exploration_steps": 10000,
+    "eval_freq": 10000,
+    "num_eval_episodes": 20,
+    "num_seeds": 15,
+    "num_workers": 8,
+    "device": "cpu",
+    "output_dir": "outputs"
+  },
+  "sac": {
+    "gamma": 0.99,
+    "tau": 0.005,
+    "learning_rate": 0.0003,
+    "hidden_dim": 256,
+    "buffer_size": 1000000,
+    "batch_size": 256,
+    "auto_entropy_tuning": true,
+    "manual_alpha": 0.01,
+    "reward_scale": 1.0
+  },
+  "features": {
+    "enable_checkpoints": true,
+    "checkpoint_freq": 10000,
+    "keep_best_n": 3,
+    "keep_last_n": 2,
+    "enable_early_stopping": true,
+    "early_stopping_patience": 10,
+    "early_stopping_min_delta": 10.0,
+    "enable_live_plot": false,
+    "record_video": true,
+    "video_freq": 50000
+  },
+  "environment_variants": {
+    "default": {
+      "hover_reward": 0,
+      "hover_box": {"x_min": -0.1, "x_max": 0.1, "y_min": 0.4, "y_max": 0.6}
+    },
+    "hover_positive": {
+      "hover_reward": 200,
+      "hover_box": {"x_min": -0.1, "x_max": 0.1, "y_min": 0.4, "y_max": 0.6}
+    },
+    "hover_negative": {
+      "hover_reward": -100,
+      "hover_box": {"x_min": -0.1, "x_max": 0.1, "y_min": 0.4, "y_max": 0.6}
+    }
+  },
+  "q3_specific": {
+    "buffer_size": 100000,
+    "comment": "Fixed-size replay buffer for Q3 (100K samples). Stores latest samples so old memory (+200 reward) eventually fades when switched to -100 reward."
+  }
+}

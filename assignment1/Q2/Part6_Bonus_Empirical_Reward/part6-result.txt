@@ -1,0 +1,138 @@
+Acrobot-v1 | Bins=10 | γ=0.99
+Training episodes = 3000 | Seeds = 10
+
+  Saved → part6_reward_function.png
+======================================================================
+PART 6 — Bonus: Modified Reward Empirical Evidence
+  α=0.1, γ=0.99, ε: 1.0→0.01 (d=0.995)
+  η values: [0, 0.5, 1, 2, 5]
+  Seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], Episodes: 3000
+======================================================================
+
+--- η=0 (default) ---
+  Seed 0 (1/10) ... done (37.5s)
+  Seed 1 (2/10) ... done (37.1s)
+  Seed 2 (3/10) ... done (37.8s)
+  Seed 3 (4/10) ... done (37.9s)
+  Seed 4 (5/10) ... done (38.0s)
+  Seed 5 (6/10) ... done (38.6s)
+  Seed 6 (7/10) ... done (37.4s)
+  Seed 7 (8/10) ... done (38.4s)
+  Seed 8 (9/10) ... done (37.0s)
+  Seed 9 (10/10) ... done (37.4s)
+
+--- η=0.5 ---
+  Seed 0 (1/10) ... done (37.6s)
+  Seed 1 (2/10) ... done (37.4s)
+  Seed 2 (3/10) ... done (37.2s)
+  Seed 3 (4/10) ... done (37.0s)
+  Seed 4 (5/10) ... done (38.3s)
+  Seed 5 (6/10) ... done (37.2s)
+  Seed 6 (7/10) ... done (37.3s)
+  Seed 7 (8/10) ... done (36.8s)
+  Seed 8 (9/10) ... done (36.8s)
+  Seed 9 (10/10) ... done (36.9s)
+
+--- η=1 ---
+  Seed 0 (1/10) ... done (38.4s)
+  Seed 1 (2/10) ... done (35.7s)
+  Seed 2 (3/10) ... done (36.0s)
+  Seed 3 (4/10) ... done (36.1s)
+  Seed 4 (5/10) ... done (36.1s)
+  Seed 5 (6/10) ... done (36.4s)
+  Seed 6 (7/10) ... done (38.2s)
+  Seed 7 (8/10) ... done (36.8s)
+  Seed 8 (9/10) ... done (36.7s)
+  Seed 9 (10/10) ... done (37.2s)
+
+--- η=2 ---
+  Seed 0 (1/10) ... done (36.5s)
+  Seed 1 (2/10) ... done (36.9s)
+  Seed 2 (3/10) ... done (35.7s)
+  Seed 3 (4/10) ... done (34.7s)
+  Seed 4 (5/10) ... done (34.9s)
+  Seed 5 (6/10) ... done (35.3s)
+  Seed 6 (7/10) ... done (35.5s)
+  Seed 7 (8/10) ... done (34.6s)
+  Seed 8 (9/10) ... done (36.3s)
+  Seed 9 (10/10) ... done (34.7s)
+
+--- η=5 ---
+  Seed 0 (1/10) ... done (36.1s)
+  Seed 1 (2/10) ... done (40.3s)
+  Seed 2 (3/10) ... done (36.7s)
+  Seed 3 (4/10) ... done (36.0s)
+  Seed 4 (5/10) ... done (37.3s)
+  Seed 5 (6/10) ... done (38.7s)
+  Seed 6 (7/10) ... done (42.3s)
+  Seed 7 (8/10) ... done (35.5s)
+  Seed 8 (9/10) ... done (36.3s)
+  Seed 9 (10/10) ... done (38.1s)
+
+======================================================================
+SUMMARY OF RESULTS
+======================================================================
+
+  η=0 (default):
+    Online (last 200 eps):
+      Orig return: -326.62 ± 16.82
+      Max height:  1.07 ± 0.02
+      Goal rate:   88.10% ± 3.15%
+      Ep length:   327.5 ± 16.8
+    Greedy evaluation (ε=0, 50 eps):
+      Return:      -310.27 ± 40.28
+      Max height:  1.09 ± 0.06
+      Goal rate:   89.60% ± 8.14%
+
+  η=0.5:
+    Online (last 200 eps):
+      Orig return: -313.02 ± 19.93
+      Max height:  1.10 ± 0.02
+      Goal rate:   91.65% ± 2.52%
+      Ep length:   313.9 ± 19.9
+    Greedy evaluation (ε=0, 50 eps):
+      Return:      -297.23 ± 21.03
+      Max height:  1.11 ± 0.03
+      Goal rate:   94.60% ± 2.97%
+
+  η=1:
+    Online (last 200 eps):
+      Orig return: -303.11 ± 23.55
+      Max height:  1.10 ± 0.03
+      Goal rate:   92.85% ± 4.68%
+      Ep length:   304.0 ± 23.5
+    Greedy evaluation (ε=0, 50 eps):
+      Return:      -304.07 ± 22.40
+      Max height:  1.10 ± 0.02
+      Goal rate:   92.60% ± 3.58%
+
+  η=2:
+    Online (last 200 eps):
+      Orig return: -297.69 ± 26.89
+      Max height:  1.09 ± 0.03
+      Goal rate:   92.50% ± 3.87%
+      Ep length:   298.6 ± 26.9
+    Greedy evaluation (ε=0, 50 eps):
+      Return:      -282.42 ± 36.98
+      Max height:  1.11 ± 0.03
+      Goal rate:   95.20% ± 5.53%
+
+  η=5:
+    Online (last 200 eps):
+      Orig return: -289.27 ± 18.61
+      Max height:  1.11 ± 0.02
+      Goal rate:   94.80% ± 1.85%
+      Ep length:   290.2 ± 18.6
+    Greedy evaluation (ε=0, 50 eps):
+      Return:      -265.28 ± 13.67
+      Max height:  1.13 ± 0.02
+      Goal rate:   97.60% ± 1.74%
+  Saved → part6_learning_curves.png
+  Saved → part6_greedy_eval.png
+  Saved → part6_modified_returns.png
+
+Done. Plots:
+  part6_reward_function.png
+  part6_learning_curves.png
+  part6_greedy_eval.png
+  part6_modified_returns.png
