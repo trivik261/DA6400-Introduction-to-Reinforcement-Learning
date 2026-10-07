@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GridWorld | Interactive RL Lab</title>
+<style>
+:root{color-scheme:dark;--bg:#101923;--panel:#192733;--line:#344755;--text:#e8f0f3;--muted:#a9bac4;--accent:#69d3b0;--gold:#f3c969}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(145deg,#101923,#152530);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:1050px;margin:auto;padding:32px 20px 60px}header{margin-bottom:22px}h1{font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.1;margin:0 0 8px}header p,.muted{color:var(--muted)}.layout{display:grid;grid-template-columns:minmax(300px,1.1fr) minmax(280px,.9fr);gap:18px}.card{background:#192733eF;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 12px 38px #0002}.card h2{font-size:1.05rem;margin:0 0 14px}.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;max-width:520px;margin:auto}.cell{aspect-ratio:1;border:1px solid #526574;border-radius:10px;background:#dce7e5;color:#16242a;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;transition:transform .12s,filter .12s;user-select:none}.cell:hover{transform:translateY(-2px);filter:brightness(1.08)}.cell .arrow{font-size:clamp(1.25rem,4vw,2rem);font-weight:700}.cell .value{position:absolute;left:5px;bottom:3px;font-size:clamp(.58rem,1.5vw,.75rem);opacity:.82;font-variant-numeric:tabular-nums}.cell .name{font-size:clamp(.62rem,1.7vw,.82rem);font-weight:700;text-align:center;padding:2px}.lake{background:#58c7ee}.fire{background:#f07b60}.boulder{background:#52606b;color:#fff}.smoke{background:#d4c6fa}.selected{outline:3px solid var(--gold);outline-offset:1px}.agent{box-shadow:inset 0 0 0 5px #f2c94c}.controls{display:grid;gap:15px}.control-row{display:flex;flex-wrap:wrap;align-items:center;gap:9px}.control-row label{font-weight:600}.control-row input[type=range]{flex:1;min-width:120px;accent-color:var(--accent)}button{border:1px solid #547080;background:#203643;color:var(--text);padding:9px 13px;border-radius:9px;font:inherit;font-weight:650;cursor:pointer}button:hover{border-color:var(--accent)}button.primary{background:var(--accent);border-color:var(--accent);color:#10211d}button:disabled{opacity:.5;cursor:default}.pill{padding:4px 9px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.85rem}.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.legend span{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:.84rem}.swatch{width:13px;height:13px;border-radius:4px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{padding:12px;background:#12202a;border-radius:10px}.stat strong{display:block;font-size:1.1rem;color:var(--accent)}.status{min-height:46px;color:var(--muted);padding:10px 12px;background:#12202a;border-radius:9px}.explain{margin-top:18px}.explain p{margin:7px 0;color:var(--muted)}footer{margin-top:20px;color:var(--muted);font-size:.84rem}code{color:#b9e5d8}@media(max-width:760px){.layout{grid-template-columns:1fr}.card{padding:16px}}
+</style>
+</head>
+<body>
+<main>
+<header><p class="pill">DA6400 · Assignment 1 · Value Iteration</p><h1>GridWorld Policy Explorer</h1><p>Explore how a stochastic world changes the optimal values and policy. Click any cell to move the starting point, then step or animate the agent.</p></header>
+<div class="layout">
+<section class="card"><h2 id="phaseTitle">Water empty · policy and state values</h2><div id="grid" class="grid" role="grid" aria-label="Interactive 5 by 5 GridWorld"></div>
+<div class="legend"><span><i class="swatch lake"></i>Lake / refill</span><span><i class="swatch fire"></i>Fire / goal</span><span><i class="swatch smoke"></i>Smoke</span><span><i class="swatch boulder"></i>Boulder</span><span><i class="swatch" style="background:#dce7e5"></i>Ordinary cell</span></div>
+<p class="muted">Arrows show the optimal action; the small number is the estimated state value. The outlined cell is the selected start.</p></section>
+<aside class="card controls"><h2>Environment and rollout</h2>
+<div class="control-row"><label for="gamma">Discount factor γ</label><input id="gamma" type="range" min="0.50" max="0.99" step="0.01" value="0.95"><output id="gammaValue">0.95</output></div>
+<div class="control-row"><label for="phase">Water status</label><select id="phase"><option value="0">Empty handed</option><option value="1">Carrying water</option></select></div>
+<div class="control-row"><button id="recompute" class="primary">Recompute policy</button><button id="step">Step once</button><button id="run">Run</button><button id="reset">Reset</button></div>
+<div class="stats"><div class="stat"><span class="muted">Current position</span><strong id="position">(2, 0)</strong></div><div class="stat"><span class="muted">Steps</span><strong id="steps">0</strong></div><div class="stat"><span class="muted">State value</span><strong id="value">—</strong></div><div class="stat"><span class="muted">Policy action</span><strong id="action">—</strong></div></div>
+<div id="status" class="status" aria-live="polite">Policy computed. Click a cell to choose a start state.</div>
+<div class="explain"><h2>Model details</h2><p>5×5 grid; step cost −1; smoke adds −10; boulder crash −100; delivering water to the fire +100.</p><p>Moves are stochastic: normally 70% intended, 10% to either perpendicular cell, and 10% stay. At smoke cells, intended movement is 40%, perpendicular moves 10% each, and staying is 40%. Boundary moves leave the agent in place.</p><p>Value iteration uses the assignment’s transition and reward rules. Rollouts sample the same stochastic transitions, so repeated runs can take different paths.</p></div>
+</aside></div>
+<footer>Interactive browser demo based on the GridWorld implementation in <code>assignment1/Q1/GridWorld.py</code>. No server, Python packages, or external assets are required.</footer>
+</main>
+<script>
+(()=>{
+'use strict';
+const N=5, lake=[0,0], fire=[4,4], smoke=[[1,2],[3,2]], boulders=[[2,4],[3,4]];
+const acts=[{name:'↑',dr:-1,dc:0},{name:'↓',dr:1,dc:0},{name:'←',dr:0,dc:-1},{name:'→',dr:0,dc:1},{name:'H',dr:0,dc:0}];
+const key=(r,c,w)=>`${r},${c},${w}`, at=(list,r,c)=>list.some(([x,y])=>x===r&&y===c), terminal=(r,c,w)=>at(boulders,r,c)||(r===fire[0]&&c===fire[1]&&w===1);
+let gamma=.95,V={},policy={},phase=0,start={r:2,c:0,w:0},state={...start},steps=0,timer=null,finished=false;
+const grid=document.querySelector('#grid'),status=document.querySelector('#status');
+function transitions(r,c,w,a){
+ if(terminal(r,c,w)) return [];
+ if(a===4) return [[1,r,c,w,-1-(at(smoke,r,c)?10:0),false]];
+ const intended=acts[a],perp1={dr:-intended.dc,dc:intended.dr},perp2={dr:intended.dc,dc:-intended.dr};
+ const probs=at(smoke,r,c)?[.4,.1,.1,.4]:[.7,.1,.1,.1],dirs=[intended,perp1,perp2,{dr:0,dc:0}];
+ return dirs.map((d,i)=>{let nr=r+d.dr,nc=c+d.dc;if(nr<0||nr>=N||nc<0||nc>=N){nr=r;nc=c}let nw=w,reward=-1,done=false;if(at(smoke,nr,nc))reward-=10;if(nr===lake[0]&&nc===lake[1]&&w===0)nw=1;if(at(boulders,nr,nc)){reward=-100;done=true}if(nr===fire[0]&&nc===fire[1]&&nw===1){reward=100;done=true}return[probs[i],nr,nc,nw,reward,done]});
+}
+function qValue(r,c,w,a){return transitions(r,c,w,a).reduce((sum,[p,nr,nc,nw,reward,done])=>sum+p*(reward+(done?0:gamma*(V[key(nr,nc,nw)]??0))),0)}
+function compute(){
+ V={};policy={};for(let r=0;r<N;r++)for(let c=0;c<N;c++)for(let w=0;w<2;w++)V[key(r,c,w)]=0;
+ for(let iter=0;iter<10000;iter++){let delta=0,next={...V};for(let r=0;r<N;r++)for(let c=0;c<N;c++)for(let w=0;w<2;w++){if(terminal(r,c,w))continue;const v=Math.max(...acts.map((_,a)=>qValue(r,c,w,a)));delta=Math.max(delta,Math.abs(v-V[key(r,c,w)]));next[key(r,c,w)]=v}V=next;if(delta<1e-8)break}
+ for(let r=0;r<N;r++)for(let c=0;c<N;c++)for(let w=0;w<2;w++){if(terminal(r,c,w))continue;let best=0,bv=-Infinity;for(let a=0;a<acts.length;a++){let q=qValue(r,c,w,a);if(q>bv){best=a;bv=q}}policy[key(r,c,w)]=best}
+ render();updateStats();status.textContent='Policy recomputed. Click a cell to choose a start state.';
+}
+function cellName(r,c,w){if(at(boulders,r,c))return'BOULDER';if(r===lake[0]&&c===lake[1]&&w===0)return'LAKE';if(r===lake[0]&&c===lake[1]&&w===1)return'REFILLED';if(r===fire[0]&&c===fire[1])return w?'GOAL':'FIRE';if(at(smoke,r,c))return'SMOKE';return''}
+function render(){grid.innerHTML='';document.querySelector('#phaseTitle').textContent=`Water ${phase?'carried':'empty'} · policy and state values`;for(let r=0;r<N;r++)for(let c=0;c<N;c++){const el=document.createElement('button');el.type='button';el.className='cell';el.setAttribute('role','gridcell');const name=cellName(r,c,phase);if(at(boulders,r,c))el.classList.add('boulder');else if(r===lake[0]&&c===lake[1])el.classList.add('lake');else if(r===fire[0]&&c===fire[1])el.classList.add('fire');else if(at(smoke,r,c))el.classList.add('smoke');if(start.r===r&&start.c===c)el.classList.add('selected');if(state.r===r&&state.c===c)el.classList.add('agent');const a=policy[key(r,c,phase)],v=V[key(r,c,phase)]??0;el.innerHTML=`<span class="name">${name||acts[a]?.name||''}</span><span class="value">${v.toFixed(1)}</span>`;el.setAttribute('aria-label',`${name||'cell'}, row ${r+1}, column ${c+1}, value ${v.toFixed(2)}, action ${acts[a]?.name||'terminal'}`);el.addEventListener('click',()=>{stop();start={r,c,w:phase};state={...start};steps=0;finished=false;render();updateStats();status.textContent='Start state selected.'});grid.appendChild(el)}}
+function updateStats(){document.querySelector('#position').textContent=`(${state.r}, ${state.c})`;document.querySelector('#steps').textContent=steps;document.querySelector('#value').textContent=(V[key(state.r,state.c,state.w)]??0).toFixed(2);document.querySelector('#action').textContent=terminal(state.r,state.c,state.w)?'Terminal':acts[policy[key(state.r,state.c,state.w)]]?.name||'—'}
+function stop(){if(timer){clearInterval(timer);timer=null}document.querySelector('#run').textContent='Run'}
+function step(){if(finished)return;const a=policy[key(state.r,state.c,state.w)];if(a===undefined){finished=true;status.textContent='This state is terminal.';return}const ts=transitions(state.r,state.c,state.w,a);let x=Math.random(),chosen=ts[ts.length-1];for(const t of ts){x-=t[0];if(x<=0){chosen=t;break}}const[,r,c,w,reward,done]=chosen;state={r,c,w};steps++;render();updateStats();const note=done?(reward>0?'Successful delivery!':`Terminal outcome (${reward}).`):`Moved ${acts[a].name}; reward ${reward}.`;status.textContent=note;if(done||steps>=100){finished=true;if(steps>=100&&!done)status.textContent='Stopped after 100 steps. Try another stochastic rollout.';stop()}}
+function reset(){stop();state={...start};steps=0;finished=false;render();updateStats();status.textContent='Rollout reset to the selected start state.'}
+document.querySelector('#gamma').addEventListener('input',e=>{gamma=Number(e.target.value);document.querySelector('#gammaValue').value=gamma.toFixed(2)});
+document.querySelector('#recompute').addEventListener('click',()=>{gamma=Number(document.querySelector('#gamma').value);compute()});
+document.querySelector('#phase').addEventListener('change',e=>{stop();phase=Number(e.target.value);start.w=phase;state.w=phase;compute()});
+document.querySelector('#step').addEventListener('click',step);
+document.querySelector('#run').addEventListener('click',()=>{if(timer){stop();return}if(finished)reset();document.querySelector('#run').textContent='Pause';timer=setInterval(step,550)});
+document.querySelector('#reset').addEventListener('click',reset);
+compute();
+})();
+</script>
+</body>
+</html>
