@@ -7,12 +7,33 @@
 <style>
 :root{color-scheme:dark;--bg:#101923;--panel:#192733;--line:#344755;--text:#e8f0f3;--muted:#a9bac4;--accent:#69d3b0;--gold:#f3c969}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(145deg,#101923,#152530);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
-main{max-width:1050px;margin:auto;padding:32px 20px 60px}header{margin-bottom:22px}h1{font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.1;margin:0 0 8px}header p,.muted{color:var(--muted)}.layout{display:grid;grid-template-columns:minmax(300px,1.1fr) minmax(280px,.9fr);gap:18px}.card{background:#192733eF;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 12px 38px #0002}.card h2{font-size:1.05rem;margin:0 0 14px}.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;max-width:520px;margin:auto}.cell{aspect-ratio:1;border:1px solid #526574;border-radius:10px;background:#dce7e5;color:#16242a;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;transition:transform .12s,filter .12s;user-select:none}.cell:hover{transform:translateY(-2px);filter:brightness(1.08)}.cell .arrow{font-size:clamp(1.25rem,4vw,2rem);font-weight:700}.cell .value{position:absolute;left:5px;bottom:3px;font-size:clamp(.58rem,1.5vw,.75rem);opacity:.82;font-variant-numeric:tabular-nums}.cell .name{font-size:clamp(.62rem,1.7vw,.82rem);font-weight:700;text-align:center;padding:2px}.lake{background:#58c7ee}.fire{background:#f07b60}.boulder{background:#52606b;color:#fff}.smoke{background:#d4c6fa}.selected{outline:3px solid var(--gold);outline-offset:1px}.agent{box-shadow:inset 0 0 0 5px #f2c94c}.controls{display:grid;gap:15px}.control-row{display:flex;flex-wrap:wrap;align-items:center;gap:9px}.control-row label{font-weight:600}.control-row input[type=range]{flex:1;min-width:120px;accent-color:var(--accent)}button{border:1px solid #547080;background:#203643;color:var(--text);padding:9px 13px;border-radius:9px;font:inherit;font-weight:650;cursor:pointer}button:hover{border-color:var(--accent)}button.primary{background:var(--accent);border-color:var(--accent);color:#10211d}button:disabled{opacity:.5;cursor:default}.pill{padding:4px 9px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.85rem}.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.legend span{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:.84rem}.swatch{width:13px;height:13px;border-radius:4px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{padding:12px;background:#12202a;border-radius:10px}.stat strong{display:block;font-size:1.1rem;color:var(--accent)}.status{min-height:46px;color:var(--muted);padding:10px 12px;background:#12202a;border-radius:9px}.explain{margin-top:18px}.explain p{margin:7px 0;color:var(--muted)}footer{margin-top:20px;color:var(--muted);font-size:.84rem}code{color:#b9e5d8}@media(max-width:760px){.layout{grid-template-columns:1fr}.card{padding:16px}}
+main{max-width:1050px;margin:auto;padding:32px 20px 60px}header{margin-bottom:22px}h1{font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.1;margin:0 0 8px}header p,.muted{color:var(--muted)}.layout{display:grid;grid-template-columns:minmax(300px,1.1fr) minmax(280px,.9fr);gap:18px}.card{background:#192733eF;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 12px 38px #0002}.card h2{font-size:1.05rem;margin:0 0 14px}.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;max-width:520px;margin:auto}.cell{aspect-ratio:1;border:1px solid #526574;border-radius:10px;background:#dce7e5;color:#16242a;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;transition:transform .12s,filter .12s;user-select:none}.cell:hover{transform:translateY(-2px);filter:brightness(1.08)}.cell .arrow{font-size:clamp(1.25rem,4vw,2rem);font-weight:700}.cell .value{position:absolute;left:5px;bottom:3px;font-size:clamp(.58rem,1.5vw,.75rem);opacity:.82;font-variant-numeric:tabular-nums}.cell .name{font-size:clamp(.62rem,1.7vw,.82rem);font-weight:700;text-align:center;padding:2px}.lake{background:#58c7ee}.fire{background:#f07b60}.boulder{background:#52606b;color:#fff}.smoke{background:#d4c6fa}.selected{outline:3px solid var(--gold);outline-offset:1px}.agent{box-shadow:inset 0 0 0 5px #f2c94c}.controls{display:grid;gap:15px}.control-row{display:flex;flex-wrap:wrap;align-items:center;gap:9px}.control-row label{font-weight:600}.control-row input[type=range]{flex:1;min-width:120px;accent-color:var(--accent)}button{border:1px solid #547080;background:#203643;color:var(--text);padding:9px 13px;border-radius:9px;font:inherit;font-weight:650;cursor:pointer}button:hover{border-color:var(--accent)}button.primary{background:var(--accent);border-color:var(--accent);color:#10211d}button:disabled{opacity:.5;cursor:default}.pill{padding:4px 9px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.85rem}.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.legend span{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:.84rem}.swatch{width:13px;height:13px;border-radius:4px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{padding:12px;background:#12202a;border-radius:10px}.stat strong{display:block;font-size:1.1rem;color:var(--accent)}.status{min-height:46px;color:var(--muted);padding:10px 12px;background:#12202a;border-radius:9px}.explain{margin-top:18px}.explain p{margin:7px 0;color:var(--muted)}footer{margin-top:20px;color:var(--muted);font-size:.84rem}code{color:#b9e5d8}.experiment-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 20px;padding:6px;background:#12202a;border:1px solid var(--line);border-radius:13px}
+.experiment-tab{background:transparent;border-color:transparent;color:var(--muted);padding:10px 15px}
+.experiment-tab[aria-selected="true"]{background:var(--accent);color:#10211d;border-color:var(--accent)}
+.experiment-panel{display:none}.experiment-panel.active{display:block}
+.assignment-heading{margin:8px 0 18px}.assignment-heading h2{font-size:1.65rem;margin:7px 0}.assignment-heading p{color:var(--muted);margin:5px 0}
+.guide-grid,.experiment-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.guide-step,.experiment-card{padding:15px;background:#12202a;border:1px solid var(--line);border-radius:11px}
+.guide-step strong,.experiment-card h3{display:block;color:var(--accent);margin:0 0 7px}
+.guide-step p,.experiment-card p{margin:5px 0;color:var(--muted)}
+.experiment-card h3{font-size:1rem}
+.experiment-card code,.command code{white-space:pre-wrap;overflow-wrap:anywhere}
+.command{margin-top:10px;padding:12px;background:#0d171e;border:1px solid var(--line);border-radius:9px;color:#cbe9dc}
+.card .link-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.card .link-row a{color:var(--accent)}
+.notice{margin-top:14px;padding:12px 14px;border-left:3px solid var(--gold);background:#2b281c;color:#e7dcb9;border-radius:7px}
+@media(max-width:760px){.layout{grid-template-columns:1fr}.card{padding:16px}.experiment-tab{flex:1 1 auto}}
 </style>
 </head>
 <body>
 <main>
-<header><p class="pill">DA6400 · Assignment 1 · Value Iteration</p><h1>GridWorld Policy Explorer</h1><p>Explore how a stochastic world changes the optimal values and policy. Click any cell to move the starting point, then step or animate the agent.</p></header>
+<header><p class="pill">DA6400 · Introduction to Reinforcement Learning</p><h1>Interactive RL Lab</h1><p>Explore the GridWorld policy and browse the DQN and actor-critic experiments from Assignments 2 and 3.</p></header>
+<nav class="experiment-tabs" role="tablist" aria-label="Assignment experiments">
+<button class="experiment-tab" id="tab-assignment-1" role="tab" aria-selected="true" aria-controls="assignment-1">Assignment 1 · GridWorld</button>
+<button class="experiment-tab" id="tab-assignment-2" role="tab" aria-selected="false" aria-controls="assignment-2" tabindex="-1">Assignment 2 · DQN</button>
+<button class="experiment-tab" id="tab-assignment-3" role="tab" aria-selected="false" aria-controls="assignment-3" tabindex="-1">Assignment 3 · SAC / PEBBLE</button>
+</nav>
+<section id="assignment-1" class="experiment-panel active" role="tabpanel" aria-labelledby="tab-assignment-1">
 <div class="layout">
 <section class="card"><h2 id="phaseTitle">Water empty · policy and state values</h2><div id="grid" class="grid" role="grid" aria-label="Interactive 5 by 5 GridWorld"></div>
 <div class="legend"><span><i class="swatch lake"></i>Lake / refill</span><span><i class="swatch fire"></i>Fire / goal</span><span><i class="swatch smoke"></i>Smoke</span><span><i class="swatch boulder"></i>Boulder</span><span><i class="swatch" style="background:#dce7e5"></i>Ordinary cell</span></div>
@@ -25,6 +46,37 @@ main{max-width:1050px;margin:auto;padding:32px 20px 60px}header{margin-bottom:22
 <div id="status" class="status" aria-live="polite">Policy computed. Click a cell to choose a start state.</div>
 <div class="explain"><h2>Model details</h2><p>5×5 grid; step cost −1; smoke adds −10; boulder crash −100; delivering water to the fire +100.</p><p>Moves are stochastic: normally 70% intended, 10% to either perpendicular cell, and 10% stay. At smoke cells, intended movement is 40%, perpendicular moves 10% each, and staying is 40%. Boundary moves leave the agent in place.</p><p>Value iteration uses the assignment’s transition and reward rules. Rollouts sample the same stochastic transitions, so repeated runs can take different paths.</p></div>
 </aside></div>
+<section class="card" aria-labelledby="gridworld-guide-title">
+<h2 id="gridworld-guide-title">How to use the policy explorer</h2>
+<div class="guide-grid">
+<div class="guide-step"><strong>1 · Choose the task phase</strong><p>Use <b>Water status</b> to switch between empty-handed and carrying water. The displayed policy is recomputed for that phase.</p></div>
+<div class="guide-step"><strong>2 · Set the discount factor</strong><p>Move the γ slider, then select <b>Recompute policy</b>. Higher γ values give more weight to future rewards.</p></div>
+<div class="guide-step"><strong>3 · Read the policy</strong><p>Each arrow is the optimal action for that cell. The small number is its estimated state value under the current phase and γ. Lake, fire, smoke, and boulder cells are marked.</p></div>
+<div class="guide-step"><strong>4 · Choose a starting cell</strong><p>Click a grid cell. The gold outline marks the selected start; the inner highlight shows the agent’s current position.</p></div>
+<div class="guide-step"><strong>5 · Try the rollout</strong><p>Select <b>Step once</b> to advance one action, or <b>Run</b> to animate. Moves are stochastic, so repeated rollouts may take different paths.</p></div>
+<div class="guide-step"><strong>6 · Start over</strong><p>Select <b>Reset</b> to return to your chosen cell. Change γ or water status to compare policies.</p></div>
+</div>
+</section>
+</section>
+<section id="assignment-2" class="experiment-panel" role="tabpanel" aria-labelledby="tab-assignment-2" aria-hidden="true">
+<div class="assignment-heading"><p class="pill">Assignment 2 · MountainCar-v0</p><h2>Deep Q-Network experiments</h2><p>Compare DQN training choices and replay strategies. These runs use Python and are not executed in the browser.</p></div>
+<div class="experiment-grid">
+<article class="experiment-card"><h3>Vanilla DQN baseline</h3><p>Train a DQN agent with replay memory, a target network, and ε-greedy exploration. In MountainCar, the agent must build momentum by moving back and forth before reaching the hilltop.</p><p><b>Explore:</b> returns across seeds and learned driving behavior.</p></article>
+<article class="experiment-card"><h3>Episode truncation</h3><p>Compare episode limits of 200, 1,000, and 2,000 steps and inspect how truncation changes learning and completion rates.</p><div class="command"><code>python main.py --mode truncation</code></div><p>Run from the <code>Q3_3Vanilla_DQN_Truncate</code> folder.</p></article>
+<article class="experiment-card"><h3>Replay-factor and sensitivity studies</h3><p>Run the Assignment 2 suite for replay-factor comparisons and hyperparameter sensitivity. The suite also includes prioritized experience replay (PER).</p><div class="command"><code>cd assignment2/Codes
+python run_all.py --num_seeds 2</code></div><p>Use 2 seeds for a quick check; omit the flag for the full 15-seed runs.</p></article>
+</div>
+<div class="card" style="margin-top:16px"><h2>Run Assignment 2 locally</h2><p>Clone the repository, open a terminal in <code>assignment2/Codes</code>, create a Python environment, install <code>requirements.txt</code>, then run the command above. The scripts generate logs and plots locally; training can take time.</p><div class="link-row"><a href="https://github.com/trivik261/DA6400-Introduction-to-Reinforcement-Learning/tree/main/assignment2/Codes">Assignment 2 code</a><a href="https://github.com/trivik261/DA6400-Introduction-to-Reinforcement-Learning/blob/main/assignment2/Codes/README.md">Setup and experiment README</a></div><div class="notice">This tab is an experiment guide, not a hosted DQN runtime. The browser demo currently runs only the GridWorld policy explorer.</div></div>
+</section>
+<section id="assignment-3" class="experiment-panel" role="tabpanel" aria-labelledby="tab-assignment-3" aria-hidden="true">
+<div class="assignment-heading"><p class="pill">Assignment 3 · Deep RL and preference learning</p><h2>SAC, DQN, and PEBBLE experiments</h2><p>Browse the experiment families and their quick-run commands. Model training requires the Python environment described in the assignment README.</p></div>
+<div class="experiment-grid">
+<article class="experiment-card"><h3>LunarLander · SAC vs DQN</h3><p>Compare discrete SAC and DQN, plus hover-reward variants. Evaluate learning behavior and the effect of the reward design.</p><div class="command"><code>python run_q2_2.py --experiments sac_disc dqn --num-seeds 2 --parallel 2 --total-steps-disc 5000 --video-every 0 --checkpoint-every 0</code></div></article>
+<article class="experiment-card"><h3>Reacher · reward variants</h3><p>Compare SAC with reward formulations Ra, Rb, and Rc, then inspect self-evaluation and cross-evaluation results.</p><div class="command"><code>python run_q2_3.py --num-seeds 2 --parallel 2 --total-steps 5000</code></div></article>
+<article class="experiment-card"><h3>PEBBLE · preference-based RL</h3><p>Compare a SAC ground-truth baseline with PEBBLE under different preference-query budgets on Pendulum, and with reward teachers on Reacher.</p><div class="command"><code>python run_q3.py --experiments sac_gt pebble_1000 --num-seeds 2 --parallel 2 --pendulum-steps 5000 --reacher-steps 5000</code></div></article>
+</div>
+<div class="card" style="margin-top:16px"><h2>Run Assignment 3 locally</h2><p>Use Python 3.12 and install <code>Implementation/shared/requirements.txt</code>. Run the commands from the working directory specified in the assignment README; the README also documents full-run settings and expected runtimes.</p><div class="link-row"><a href="https://github.com/trivik261/DA6400-Introduction-to-Reinforcement-Learning/tree/main/assignment3">Assignment 3 code</a><a href="https://github.com/trivik261/DA6400-Introduction-to-Reinforcement-Learning/blob/main/assignment3/README.md">Setup and experiment README</a></div><div class="notice">The hosted page summarizes these Python experiments; it does not run the SAC, DQN, or PEBBLE training jobs in your browser.</div></div>
+</section>
 <footer>Interactive browser demo based on the GridWorld implementation in <code>assignment1/Q1/GridWorld.py</code>. No server, Python packages, or external assets are required.</footer>
 </main>
 <script>
@@ -63,6 +115,25 @@ document.querySelector('#run').addEventListener('click',()=>{if(timer){stop();re
 document.querySelector('#reset').addEventListener('click',reset);
 compute();
 })();
+document.querySelectorAll('.experiment-tab').forEach((tab,index,tabs)=>{
+ tab.addEventListener('click',()=>{
+  tabs.forEach(item=>{
+   const active=item===tab;
+   item.setAttribute('aria-selected',String(active));
+   item.tabIndex=active?0:-1;
+   const panel=document.getElementById(item.getAttribute('aria-controls'));
+   panel.classList.toggle('active',active);
+   panel.setAttribute('aria-hidden',String(!active));
+  });
+ });
+ tab.addEventListener('keydown',event=>{
+  if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+  event.preventDefault();
+  const next=event.key==='Home'?0:event.key==='End'?tabs.length-1:(index+(event.key==='ArrowRight'?1:tabs.length-1))%tabs.length;
+  tabs[next].focus();
+  tabs[next].click();
+ });
+});
 </script>
 </body>
 </html>
