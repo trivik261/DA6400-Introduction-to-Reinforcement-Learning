@@ -12,4 +12,8 @@ Each assignment has its own setup instructions and dependencies; see its README 
 
 ## Interactive demo
 
-Open [`web/gridworld/index.html`](web/gridworld/index.html) in a browser to explore the GridWorld assignment. The browser demo runs value iteration locally, lets you change the discount factor, and animates stochastic policy rollouts. It needs no backend or install step.
+[Launch the GridWorld Policy Explorer](https://trivik261.github.io/DA6400-Introduction-to-Reinforcement-Learning/)
+
+The demo runs value iteration in your browser, lets you change the discount factor and water status, and animates stochastic policy rollouts. It needs no backend or install step.
+
+[View the demo source](web/gridworld/index.html). GitHub Actions deploys the `web/gridworld/` directory to GitHub Pages whenever it changes on `main`.
